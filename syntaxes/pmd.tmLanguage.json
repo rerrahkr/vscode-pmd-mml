@@ -1,0 +1,437 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "PMD",
+	"patterns": [
+		{ "include": "#comments" },
+		{ "include": "#headers" },
+		{ "include": "#parts" },
+		{ "include": "#volumes" },
+		{ "include": "#fadeout" },
+		{ "include": "#lfos" },
+		{ "include": "#instruments" },
+		{ "include": "#pans" },
+		{ "include": "#pitches" },
+		{ "include": "#misc" },
+		{ "include": "#lengths" },
+		{ "include": "#macros" },
+		{ "include": "#forces" }
+	],
+	"repository": {
+		"comments": {
+			"patterns": [
+				{
+					"name":"comment.line.pmd",
+					"match": ";.+$"
+				},
+				{
+					"name": "comment.block.pmd",
+					"begin": "`",
+					"end": "`"
+				}
+			]
+		},
+		"headers": {
+			"patterns": [
+				{
+					"name": "constant.language.pmd",
+					"match": "^#(?i)(Filename|(PPS|PCM|PPC|FF|PPZ)File|Option|Title|Composer)\\b(.*)",
+					"captures": {
+						"3": {
+							"patterns": [
+								{ "include": "#comments" },
+							 	{ "include": "#header-value" }
+							]
+						}
+					}
+				},
+				{
+					"name": "constant.language.pmd",
+					"match": "^#(?i)(Arranger|Memo|Tempo|Timer|Zenlen|Octave|LoopDefault|DT2Flag)\\b(.*)",
+					"captures": {
+						"2": {
+							"patterns": [
+								{ "include": "#comments" },
+							 	{ "include": "#header-value" }
+							]
+						}
+					}
+				},
+				{
+					"name": "constant.language.pmd",
+					"match": "^#(?i)(Bendrange|Detune|LFOSpeed|EnvelopeSpeed|PCMVolume)\\b(.*)",
+					"captures": {
+						"2": {
+							"patterns": [
+								{ "include": "#comments" },
+							 	{ "include": "#header-value" }
+							]
+						}
+					}
+				},
+				{
+					"name": "constant.language.pmd",
+					"match": "^#(?i)((FM3|PPZ)Extend|Include|Volumedown|ADPCM|Jump|Transpose)\\b(.*)",
+					"captures": {
+						"3": {
+							"patterns": [
+								{ "include": "#comments" },
+							 	{ "include": "#header-value" }
+							]
+						}
+					}
+				}
+			],
+			"repository": {
+				"header-value": {
+					"patterns": [
+						{
+							"name": "string.unquoted.pmd",
+							"match": ".+"
+						}
+					]
+				}
+			}
+		},
+		"parts": {
+			"patterns": [
+				{
+					"name": "variable.parameter.pmd",
+					"match": "^\\b([A-QS-Z]+|R\\d{1,3})\\b"
+				},
+				{
+					"name": "variable.parameter.pmd",
+					"match": "\\|!?(\\b[A-QS-Z]\\b)?"
+				}
+			]
+		},
+		"volumes": {
+			"patterns": [
+				{
+					"name": "string.regexp.pmd",
+					"match": "\\\\V[\\+\\-]?\\d{1,2}"
+				},
+				{
+					"name": "string.regexp.pmd",
+					"match": "\\\\v[bchist][\\+\\-]?\\d{1,2}"
+				},
+				{
+					"name": "string.regexp.pmd",
+					"match": "v\\d{1,2}"
+				},
+				{
+					"name": "string.regexp.pmd",
+					"match": "V\\d{1,3}"
+				},
+				{
+					"name": "string.regexp.pmd",
+					"match": "v[\\+\\-]?\\d{1,3}"
+				},
+				{
+					"name": "string.regexp.pmd",
+					"match": "v[\\(\\)]\\d{1,2}"
+				},
+				{
+					"name": "string.regexp.pmd",
+					"match": "[\\(\\)]\\^?%?(\\d{1,3})?"
+				},
+				{
+					"name": "string.regexp.pmd",
+					"match": "D[FPRS][\\+\\-]?\\d{1,3}"
+				}
+			]
+		},
+		"fadeout": {
+			"name": "string.regexp.pmd",
+			"match": "F\\d{1,3}"
+		},
+		"lfos": {
+			"patterns": [
+				{
+					"name":"constant.numeric.pmd",
+					"match": "MW[AB]?[0-6]"
+				},
+				{
+					"name":"constant.numeric.pmd",
+					"match": "\\*[AB]?[0-7](,[AB]?[0-7])?"
+				},
+				{
+					"name":"constant.numeric.pmd",
+					"match": "MM[AB]?\\d{1,2}"
+				},
+				{
+					"name":"constant.numeric.pmd",
+					"match": "MX[AB]?[01]"
+				},
+				{
+					"name":"constant.numeric.pmd",
+					"match": "M[AB]?l?\\d{1,3}\\.*(,[\\+\\-]?\\d{1,3}){3}?"
+				},
+				{
+					"name":"constant.numeric.pmd",
+					"match": "MP[AB]?[\\+\\-]?\\d{1,3}(,l?\\d{1,3}\\.*(,\\d{1,3})?)?"
+				},
+				{
+					"name":"constant.numeric.pmd",
+					"match": "MD[AB]?\\d{1,3}(,[\\+\\-]?\\d{1,3}(,\\d{1,3})?)?"
+				},
+				{
+					"name":"constant.numeric.pmd",
+					"match": "H[0-7](,[0-3])?(,l?\\d{1,3}\\.*)?"
+				},
+				{
+					"name":"constant.numeric.pmd",
+					"match": "#[01](,[0-7])?"
+				},
+				{
+					"name":"constant.numeric.pmd",
+					"match": "#[fa]\\d{1,3}"
+				},
+				{
+					"name":"constant.numeric.pmd",
+					"match": "##\\d{1,3},[0-3],[\\+\\-]?\\d{1,2},\\d{1,3}"
+				},
+				{
+					"name":"constant.numeric.pmd",
+					"match": "#w[0-3]"
+				},
+				{
+					"name":"constant.numeric.pmd",
+					"match": "#p[\\+\\-]?\\d{1,2}"
+				},
+				{
+					"name":"constant.numeric.pmd",
+					"match": "#Dl?\\d{1,3}\\.*"
+				}
+			]
+		},
+		"instruments": {
+			"patterns": [
+				{
+					"name": "keyword.control.pmd",
+					"match": "@[ \\t]*\\d{1,3}"
+				},
+				{
+					"name": "keyword.control.pmd",
+					"match": "E[ \\t]*\\d{1,2}(,[ \\t]*\\d{1,2}){4,5}"
+				},
+				{
+					"name": "keyword.control.pmd",
+					"match": "E[ \\t]*\\d{1,3},[ \\t]*[\\+\\-]?\\d{1,2}(,[ \\t]*\\d{1,3}){2}"
+				},
+				{
+					"name": "keyword.control.pmd",
+					"match": "EX[01]"
+				},
+				{
+					"name": "keyword.control.pmd",
+					"match": "\\\\[bchist]p?"
+				},
+				{
+					"name": "keyword.control.pmd",
+					"match": "y\\$\\h{1,3},\\$?\\h{1,3}"
+				},
+				{
+					"name": "keyword.control.pmd",
+					"match": "s\\d{1,2}"
+				},
+				{
+					"name": "keyword.control.pmd",
+					"match": "O\\d{1,2},[\\+\\-]?\\d{1,2}"
+				},
+				{
+					"name": "keyword.control.pmd",
+					"match": "FB[\\+\\-]?[0-7]"
+				},
+				{
+					"name": "keyword.control.pmd",
+					"match": "s\\d{1,2}"
+				},
+				{
+					"name": "keyword.control.pmd",
+					"match": "P[1-3]"
+				},
+				{
+					"name": "keyword.control.pmd",
+					"match": "w[\\+\\-]?\\d{1,2}"
+				},
+				{
+					"name": "keyword.control.pmd",
+					"match": "[nN]\\d{1,3}"
+				},
+				{
+					"name": "keyword.control.pmd",
+					"match": "A[01]"
+				},
+				{
+					"name": "keyword.control.pmd",
+					"match": "SE\\d{1,2},\\d{1,2}"
+				}
+			]
+		},
+		"pans": {
+			"patterns": [
+				{
+					"name": "entity.name.function.pmd",
+					"match": "p[0-3]"
+				},
+				{
+					"name": "entity.name.function.pmd",
+					"match": "px[\\+\\-]\\d{1,3}"
+				},
+				{
+					"name": "entity.name.function.pmd",
+					"match": "\\\\[lmr][bchist]"
+				}
+			]
+		},
+		"pitches": {
+			"patterns": [
+				{
+					"name": "variable.language.pmd",
+					"match": "o[1-8]"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "[X<>]"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "o[\\+\\-][1-7]"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "__?[\\+\\-]?\\d{1,3}"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "_\\{[\\+-=][a-g]+\\}"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "_M[\\+\\-]?\\d{1,3}"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "DD?[+-]?\\d{1,5}"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "sdd?\\d{1,2},\\d{1,5}"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "DX[01]"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "B\\d{1,3}"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "I[\\+\\-]?\\d"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "DM[\\+\\-]?\\d"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "\\{\\{"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "\\}\\}[%\\.\\d]*,[%\\.\\d]*,[01]?,\\d*,[\\+\\-]?\\d+"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "\\}\\}[%\\.\\d]*,[%\\.\\d]*,[01]?,\\d*"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "\\}\\}[%\\.\\d]*,[%\\.\\d]*,[01]?"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "\\}\\}[%\\.\\d]*,[%\\.\\d]*"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "\\}\\}[%\\.\\d]*"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "\\{"
+				},
+				{
+					"name": "variable.language.pmd",
+					"match": "\\}(%?\\d{1,3}\\.*(,\\d{1,3}\\.*)?)?"
+				}
+			]
+		},
+		"misc": {
+			"patterns": [
+				{
+					"name": "variable.parameter.pmd",
+					"match": "L"
+				},
+				{
+					"name": "variable.parameter.pmd",
+					"match": "(\\[|:|\\]\\d{,3})"
+				},
+				{
+					"name": "variable.parameter.pmd",
+					"match": "Sl?\\d{1,3}\\.*(,[\\+\\-]?\\d{1,3}(,[01])?)?"
+				},
+				{
+					"name": "variable.parameter.pmd",
+					"match": "Wl?\\d{1,3}\\.*(,%?[\\+\\-]?\\d{1,3}(,[0-3])?)?"
+				}
+			]
+		},
+		"lengths": {
+			"patterns": [
+				{
+					"name": "support.type.pmd",
+					"match": "l%?\\d{1,3}\\.*"
+				},
+				{
+					"name": "support.type.pmd",
+					"match": "C\\d{1,3}"
+				},
+				{
+					"name": "support.type.pmd",
+					"match": "Q([0-8]|%\\d{1,3})"
+				},
+				{
+					"name": "support.type.pmd",
+					"match": "q\\d{1,3}\\.*(-(\\d{1,3}\\.*)?)?(,\\d{1,3}\\.*)?"
+				}
+			]
+		},
+		"macros": {
+			"patterns": [
+				{
+					"name": "constant.character.escape.pmd",
+					"match": "^!\\S+"
+				},
+				{
+					"name": "markup.underline.pmd",
+					"match": "R\\d{1,3}"
+				}
+			]
+		},
+		"forces": {
+			"patterns": [
+				{
+					"name": "invalid.illegal.pmd",
+					"match": "m[01]"
+				},
+				{
+					"name": "invalid.illegal.pmd",
+					"match": "/"
+				}
+			]
+		}
+	},
+	"scopeName": "source.pmd"
+}

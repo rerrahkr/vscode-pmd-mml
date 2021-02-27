@@ -1,0 +1,31 @@
+{
+    "name": "pmd-mml",
+    "displayName": "PMD MML",
+    "description": "PMD MML",
+    "version": "0.0.1",
+    "publisher": "Rerrah",
+    "engines": {
+        "vscode": "^1.53.0"
+    },
+    "license": "MIT",
+    "categories": [
+        "Programming Languages"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/rerrahkr/vscode-pmd-mml.git"
+    },
+    "contributes": {
+        "languages": [{
+            "id": "pmd",
+            "aliases": ["PMD", "pmd"],
+            "extensions": [".mml"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "pmd",
+            "scopeName": "source.pmd",
+            "path": "./syntaxes/pmd.tmLanguage.json"
+        }]
+    }
+}
